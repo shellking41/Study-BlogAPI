@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.auth;
+package org.study.studyblogapi.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.auth;
+package org.study.studyblogapi.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

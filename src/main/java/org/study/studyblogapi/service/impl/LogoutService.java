@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.config;
+package org.study.studyblogapi.service.impl;
 
 
 import jakarta.servlet.http.Cookie;
@@ -9,7 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
-import org.study.studyblogapi.security.token.TokenRepository;
+import org.study.studyblogapi.repository.TokenRepository;
+import org.study.studyblogapi.security.config.JwtService;
 
 @Service
 @RequiredArgsConstructor

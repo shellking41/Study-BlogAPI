@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.user;
+package org.study.studyblogapi.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

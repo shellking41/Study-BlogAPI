@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.user;
+package org.study.studyblogapi.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.study.studyblogapi.security.user.Permission.*;
+import static org.study.studyblogapi.model.enums.Permission.*;
 
 
 @RequiredArgsConstructor

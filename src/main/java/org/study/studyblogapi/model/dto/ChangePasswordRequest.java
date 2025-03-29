@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.user;
+package org.study.studyblogapi.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;

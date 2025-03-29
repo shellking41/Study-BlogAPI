@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.auth;
+package org.study.studyblogapi.service.impl;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,27 +7,28 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
+import org.study.studyblogapi.model.dto.AuthenticationRequest;
+import org.study.studyblogapi.model.dto.AuthenticationResponse;
+import org.study.studyblogapi.model.dto.RegisterRequest;
 import org.study.studyblogapi.security.config.JwtService;
-import org.study.studyblogapi.security.token.Token;
-import org.study.studyblogapi.security.token.TokenRepository;
-import org.study.studyblogapi.security.token.TokenType;
-import org.study.studyblogapi.security.user.User;
-import org.study.studyblogapi.security.user.UserRepository;
+import org.study.studyblogapi.model.entity.Token;
+import org.study.studyblogapi.repository.TokenRepository;
+import org.study.studyblogapi.model.enums.TokenType;
+import org.study.studyblogapi.model.entity.User;
+import org.study.studyblogapi.repository.UserRepository;
+import org.study.studyblogapi.service.IAuthenticationService;
 
 import java.io.IOException;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService {
+
   private final UserRepository repository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
@@ -43,6 +44,7 @@ public class AuthenticationService {
   private static final String ACCESS_TOKEN_COOKIE_NAME = "access_token";
   private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
 
+  @Override
   public Map<String,Object> register(RegisterRequest request, HttpServletResponse response) {
     var user = User.builder()
         .firstname(request.getFirstname())
@@ -65,8 +67,8 @@ public class AuthenticationService {
   }
 
 
-
-  public Map<String,Object> authenticate(AuthenticationRequest request,HttpServletResponse response) {
+  @Override
+  public Map<String,Object> authenticate(AuthenticationRequest request, HttpServletResponse response) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
             request.getEmail(),
@@ -88,7 +90,42 @@ public class AuthenticationService {
     return res;
   }
 
-  private void saveUserToken(User user, String jwtToken) {
+  @Override
+  public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+  ) throws IOException {
+
+      String refreshToken= jwtService.getTokenFromCookies(request, REFRESH_TOKEN_COOKIE_NAME);
+
+      //need exception
+      if(refreshToken==null){
+          return;
+      }
+
+      String userEmail = jwtService.extractUsername(refreshToken);
+      if (userEmail != null) {
+          var user = this.repository.findByEmail(userEmail)
+                  .orElseThrow();
+          if (jwtService.isTokenValid(refreshToken, user)) {
+              var accessToken = jwtService.generateToken(user);
+              revokeAllUserTokens(user);
+              saveUserToken(user, accessToken);
+
+              addTokenCookie(response,ACCESS_TOKEN_COOKIE_NAME,accessToken,jwtExpiration);
+
+              var authResponse = AuthenticationResponse.builder()
+                      .accessToken(accessToken)
+                      .refreshToken(refreshToken)
+                      .build();
+              new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+          }
+      }
+  }
+
+
+
+    private void saveUserToken(User user, String jwtToken) {
     var token = Token.builder()
         .user(user)
         .token(jwtToken)
@@ -110,38 +147,7 @@ public class AuthenticationService {
     tokenRepository.saveAll(validUserTokens);
   }
 
-  public void refreshToken(
-          HttpServletRequest request,
-          HttpServletResponse response
-  ) throws IOException {
-
-   String refreshToken= jwtService.getTokenFromCookies(request, REFRESH_TOKEN_COOKIE_NAME);
-
-   //need exception
-   if(refreshToken==null){
-     return;
-   }
-
-    String userEmail = jwtService.extractUsername(refreshToken);
-    if (userEmail != null) {
-      var user = this.repository.findByEmail(userEmail)
-              .orElseThrow();
-      if (jwtService.isTokenValid(refreshToken, user)) {
-        var accessToken = jwtService.generateToken(user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, accessToken);
-
-        addTokenCookie(response,ACCESS_TOKEN_COOKIE_NAME,accessToken,jwtExpiration);
-
-        var authResponse = AuthenticationResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
-        new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-      }
-    }
-  }
-
+//valamiert ugyan anyi a expirationdatejuk a refreshtokenneak es a accesstokennak
   private void addTokenCookie(HttpServletResponse response, String name, String token, long expiration) {
 
     Cookie cookie=new Cookie(name,token);

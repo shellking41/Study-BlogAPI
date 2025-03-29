@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.token;
+package org.study.studyblogapi.model.entity;
 
 
 import jakarta.persistence.Column;
@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.study.studyblogapi.security.user.User;
+import org.study.studyblogapi.model.enums.TokenType;
 
 @Data
 @Builder

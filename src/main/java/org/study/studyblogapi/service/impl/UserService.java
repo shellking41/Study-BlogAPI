@@ -1,15 +1,19 @@
-package org.study.studyblogapi.security.user;
+package org.study.studyblogapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.study.studyblogapi.repository.UserRepository;
+import org.study.studyblogapi.model.dto.ChangePasswordRequest;
+import org.study.studyblogapi.model.entity.User;
+import org.study.studyblogapi.service.IUserService;
 
 import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements IUserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;

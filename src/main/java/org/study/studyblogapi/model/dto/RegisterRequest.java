@@ -1,11 +1,11 @@
-package org.study.studyblogapi.security.auth;
+package org.study.studyblogapi.model.dto;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.study.studyblogapi.security.user.Role;
+import org.study.studyblogapi.model.enums.Role;
 
 @Data
 @Builder

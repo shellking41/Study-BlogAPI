@@ -1,4 +1,4 @@
-package org.study.studyblogapi.security.auth;
+package org.study.studyblogapi.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.study.studyblogapi.security.config.LogoutService;
+import org.study.studyblogapi.model.dto.AuthenticationRequest;
+import org.study.studyblogapi.service.IAuthenticationService;
+import org.study.studyblogapi.model.dto.RegisterRequest;
+import org.study.studyblogapi.service.impl.LogoutService;
 
 import java.io.IOException;
 import java.util.Map;
@@ -19,7 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-  private final AuthenticationService authenticationService;
+  private final IAuthenticationService authenticationService;
   private final LogoutService logoutService;
 
 
