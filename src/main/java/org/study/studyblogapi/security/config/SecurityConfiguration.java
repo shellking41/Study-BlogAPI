@@ -20,9 +20,9 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-import static org.study.studyblogapi.security.user.Permission.*;
-import static org.study.studyblogapi.security.user.Role.ADMIN;
-import static org.study.studyblogapi.security.user.Role.MANAGER;
+import static org.study.studyblogapi.model.enums.Permission.*;
+import static org.study.studyblogapi.model.enums.Role.ADMIN;
+import static org.study.studyblogapi.model.enums.Role.MANAGER;
 
 @Configuration
 @EnableWebSecurity
