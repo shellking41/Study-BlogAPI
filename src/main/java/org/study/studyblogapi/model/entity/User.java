@@ -1,13 +1,8 @@
 package org.study.studyblogapi.model.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -31,6 +26,8 @@ public class User implements UserDetails {
   private Integer id;
   private String firstname;
   private String lastname;
+
+  @Column(unique = true)
   private String email;
   private String password;
 
@@ -39,6 +36,9 @@ public class User implements UserDetails {
 
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
+
+  @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+  private List<BlogPost> blogPosts;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
