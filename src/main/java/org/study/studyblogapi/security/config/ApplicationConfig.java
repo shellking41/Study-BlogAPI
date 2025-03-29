@@ -13,8 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.study.studyblogapi.security.auditing.ApplicationAuditAware;
+
 import org.study.studyblogapi.repository.UserRepository;
+import org.study.studyblogapi.security.auditing.ApplicationAuditAware;
 
 @Configuration
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class ApplicationConfig {
   }
 
   @Bean
-  public AuditorAware<Integer> auditorAware() {
+  public AuditorAware<String> auditorAware() {
     return new ApplicationAuditAware();
   }
 
