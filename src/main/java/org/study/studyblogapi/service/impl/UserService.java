@@ -1,9 +1,15 @@
 package org.study.studyblogapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.study.studyblogapi.exeption.UserNotFoundException;
+import org.study.studyblogapi.mapper.UserMapper;
+import org.study.studyblogapi.model.dto.UserResponse;
 import org.study.studyblogapi.repository.UserRepository;
 import org.study.studyblogapi.model.dto.ChangePasswordRequest;
 import org.study.studyblogapi.model.entity.User;
@@ -16,7 +22,7 @@ import java.security.Principal;
 public class UserService implements IUserService {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
 
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
@@ -34,6 +40,28 @@ public class UserService implements IUserService {
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 
         // save the new password
-        repository.save(user);
+        userRepository.save(user);
     }
+
+    public UserResponse getAuthenticatedUserResponse() {
+        User user = getAuthenticatedUser();
+       return UserMapper.toResponse(user);
+    }
+
+
+    public User getAuthenticatedUser(){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication==null || authentication instanceof AnonymousAuthenticationToken || !authentication.isAuthenticated()){
+            throw new UserNotFoundException("User not found");
+        }
+
+        Integer userid=((User)authentication.getPrincipal()).getId();
+        return userRepository.findById(userid)
+                .orElseThrow(()->new UserNotFoundException("User not found"));
+
+
+    }
+
+
 }
