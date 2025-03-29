@@ -15,7 +15,7 @@ public class BlogPostResponse {
     private String title;
     private String content;
     private String category;
-    private Integer createdBy;
+    private String createdBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

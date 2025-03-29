@@ -7,10 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.study.studyblogapi.exeption.UserNotFoundException;
 import org.study.studyblogapi.model.dto.AuthenticationRequest;
 import org.study.studyblogapi.model.dto.AuthenticationResponse;
 import org.study.studyblogapi.model.dto.RegisterRequest;
@@ -147,16 +151,17 @@ public class AuthenticationService implements IAuthenticationService {
     tokenRepository.saveAll(validUserTokens);
   }
 
-//valamiert ugyan anyi a expirationdatejuk a refreshtokenneak es a accesstokennak
+
   private void addTokenCookie(HttpServletResponse response, String name, String token, long expiration) {
 
     Cookie cookie=new Cookie(name,token);
     cookie.setHttpOnly(true);
     cookie.setPath("/");
     cookie.setSecure(false);
-    cookie.setMaxAge((int)expiration);
+    cookie.setMaxAge((int)expiration/1000);
     response.addCookie(cookie);
   }
+
 
 
 }
