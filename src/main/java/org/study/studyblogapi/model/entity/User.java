@@ -1,6 +1,7 @@
 package org.study.studyblogapi.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -34,11 +35,26 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
+  @ManyToMany
+  @JoinTable(
+          name = "followers",
+          joinColumns = @JoinColumn(name = "follower_id",nullable = false),
+          inverseJoinColumns = @JoinColumn(name="following_id",nullable = false)
+  )
+  private List<User> following;
+
+  @JsonIgnore
+  @ManyToMany(mappedBy = "following")
+  private List<User> followers;
+
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
-  @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+  @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,orphanRemoval = true)
   private List<BlogPost> blogPosts;
+
+  @ManyToMany(mappedBy = "likedByUsers")
+  private List<BlogPost> likedPosts;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

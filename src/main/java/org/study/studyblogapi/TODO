@@ -1,0 +1,7 @@
+1.Alapértelmezett értéket adni a userRolenak,
+2.Megakadályozni, hogy a felhasznalo megmondja hogy milyen Role-t szeretne
+3.Custom SQL querryvel metlehetni csinalni azt hogy ajánljon blogpostokat(Sortolni a leglikeoltabbak,legújjabb és ha following user akkor azt a blogot tegye elore)
+4.Search system,tagekkel
+5.Ha kerul uj tag a adatbazisba akkor checkeljuk hogy van-e olyan benne és ha van akkor ne legyen benne ujra ugyan az
+6.Paginacio,Caching(follower,useradatok),async
+7.like System

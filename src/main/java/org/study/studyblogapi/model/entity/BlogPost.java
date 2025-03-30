@@ -30,11 +30,18 @@ public class BlogPost  extends  BaseEntity{
             name = "blog_posts_tags",
             joinColumns = @JoinColumn(name="blog_post_id",nullable = false),
             inverseJoinColumns = @JoinColumn(name="tag_id",nullable = false)
-
     )
     private List<Tag> tags;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
-    private User user;
+    private User author;
+
+    @ManyToMany
+    @JoinTable(
+            name="likes",
+            joinColumns = @JoinColumn(name = "likedByUser_id",nullable = false),
+            inverseJoinColumns = @JoinColumn(name="likedPost_id",nullable = false)
+    )
+    private List<User> likedByUsers;
 }
