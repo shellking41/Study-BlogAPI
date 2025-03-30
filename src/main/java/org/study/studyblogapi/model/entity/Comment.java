@@ -22,4 +22,9 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name="blog_post_id",nullable = false)
     BlogPost blogPost;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    User commenter;
 }
