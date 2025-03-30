@@ -1,4 +1,4 @@
-package org.study.studyblogapi.model.dto;
+package org.study.studyblogapi.model.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class BlogPostResponse {
+
+    private Long id;
     private String title;
     private String content;
     private String category;

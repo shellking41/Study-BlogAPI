@@ -1,4 +1,4 @@
-package org.study.studyblogapi.model.dto;
+package org.study.studyblogapi.model.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
