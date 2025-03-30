@@ -1,4 +1,4 @@
-package org.study.studyblogapi.model.dto;
+package org.study.studyblogapi.model.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

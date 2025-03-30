@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.study.studyblogapi.model.dto.AuthenticationRequest;
+import org.study.studyblogapi.model.dto.request.AuthenticationRequest;
 import org.study.studyblogapi.service.IAuthenticationService;
-import org.study.studyblogapi.model.dto.RegisterRequest;
+import org.study.studyblogapi.model.dto.request.RegisterRequest;
 import org.study.studyblogapi.service.impl.LogoutService;
 
 import java.io.IOException;
