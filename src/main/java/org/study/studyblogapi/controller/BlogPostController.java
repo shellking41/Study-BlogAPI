@@ -1,11 +1,9 @@
 package org.study.studyblogapi.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.study.studyblogapi.model.dto.BlogPostRequest;
-import org.study.studyblogapi.model.dto.BlogPostResponse;
+import org.study.studyblogapi.model.dto.request.BlogPostRequest;
+import org.study.studyblogapi.model.dto.response.BlogPostResponse;
 import org.study.studyblogapi.service.IBlogPostService;
 
 @RequiredArgsConstructor
