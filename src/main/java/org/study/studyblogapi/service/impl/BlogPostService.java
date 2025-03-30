@@ -27,11 +27,31 @@ public class BlogPostService implements IBlogPostService {
 
        BlogPost blogPost= BlogPostMapper.toEntity(request);
 
-       blogPost.setUser(user);
+       blogPost.setAuthor(user);
        blogPostRepository.save(blogPost);
 
        user.getBlogPosts().add(blogPost);
        userRepository.save(user);
        return BlogPostMapper.toResponse(blogPost);
         }
+
+    @Override
+    public boolean toggleLike(Long postId) {
+        User user=userService.getAuthenticatedUser();
+        BlogPost blogPost=blogPostRepository.findById(postId)
+                .orElseThrow(()-> new RuntimeException("Post Not Found"));
+        boolean hasLiked= blogPostRepository.hasUserLikedPost(postId,user.getId());
+
+        if(hasLiked){
+           blogPost.getLikedByUsers().remove(user);
+           blogPost.setLikeCount(blogPost.getLikeCount()-1);
+        }else{
+            blogPost.getLikedByUsers().add(user);
+            blogPost.setLikeCount(blogPost.getLikeCount()+1);
+        }
+
+        blogPostRepository.save(blogPost);
+        return !hasLiked;
+    }
+
 }

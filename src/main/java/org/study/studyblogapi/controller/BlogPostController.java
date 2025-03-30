@@ -1,11 +1,9 @@
 package org.study.studyblogapi.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.study.studyblogapi.model.dto.BlogPostRequest;
 import org.study.studyblogapi.model.dto.BlogPostResponse;
 import org.study.studyblogapi.service.IBlogPostService;
@@ -22,5 +20,10 @@ public class BlogPostController {
 
         return blogPostService.createBlogPost(request);
 
+    }
+
+    @PutMapping("/toggleLike/{postId}")
+    public boolean toggleLike(@PathVariable Long postId){
+        return blogPostService.toggleLike(postId);
     }
 }
