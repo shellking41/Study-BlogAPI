@@ -23,7 +23,7 @@ import org.study.studyblogapi.model.enums.Role;
 public class User implements UserDetails {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String firstname;
   private String lastname;
@@ -55,6 +55,10 @@ public class User implements UserDetails {
 
   @ManyToMany(mappedBy = "likedByUsers")
   private List<BlogPost> likedPosts;
+
+
+  @OneToMany(mappedBy = "commenter", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Comment> comments;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -89,5 +93,12 @@ public class User implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+
+  //megcsinalja azokat  a dolgokat amiket a adatbazis feltotelse elott kellene csinalni
+  @PrePersist
+  protected void onCreate(){
+    role=Role.USER;
   }
 }
