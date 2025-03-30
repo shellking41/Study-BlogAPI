@@ -16,11 +16,12 @@ import java.util.List;
 public class BlogPost  extends  BaseEntity{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String content;
     private String category;
+    private int likeCount;
 
     @OneToMany(mappedBy = "blogPost",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Comment> comments;
@@ -40,8 +41,15 @@ public class BlogPost  extends  BaseEntity{
     @ManyToMany
     @JoinTable(
             name="likes",
-            joinColumns = @JoinColumn(name = "likedByUser_id",nullable = false),
-            inverseJoinColumns = @JoinColumn(name="likedPost_id",nullable = false)
+            joinColumns = @JoinColumn(name = "likedPost_id",nullable = false),
+            inverseJoinColumns = @JoinColumn(name="likedByUser_id",nullable = false)
     )
     private List<User> likedByUsers;
+
+
+    //megcsinalja azokat  a dolgokat amiket a adatbazis feltotelse elott kellene csinalni
+    @PrePersist
+    protected void onCreate(){
+        likeCount=0;
+    }
 }
