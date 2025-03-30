@@ -1,10 +1,12 @@
 package org.study.studyblogapi.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.study.studyblogapi.exeption.BlogPostNotFoundException;
 import org.study.studyblogapi.mapper.BlogPostMapper;
-import org.study.studyblogapi.model.dto.BlogPostRequest;
-import org.study.studyblogapi.model.dto.BlogPostResponse;
+import org.study.studyblogapi.model.dto.request.BlogPostRequest;
+import org.study.studyblogapi.model.dto.response.BlogPostResponse;
 import org.study.studyblogapi.model.entity.BlogPost;
 import org.study.studyblogapi.model.entity.User;
 import org.study.studyblogapi.repository.BlogPostRepository;
@@ -21,25 +23,23 @@ public class BlogPostService implements IBlogPostService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public BlogPostResponse createBlogPost(BlogPostRequest request) {
         User user=userService.getAuthenticatedUser();
 
+       BlogPost blogPost= BlogPostMapper.toEntity(request,user);
 
-       BlogPost blogPost= BlogPostMapper.toEntity(request);
-
-       blogPost.setAuthor(user);
        blogPostRepository.save(blogPost);
 
-       user.getBlogPosts().add(blogPost);
-       userRepository.save(user);
        return BlogPostMapper.toResponse(blogPost);
         }
 
     @Override
+    @Transactional
     public boolean toggleLike(Long postId) {
         User user=userService.getAuthenticatedUser();
         BlogPost blogPost=blogPostRepository.findById(postId)
-                .orElseThrow(()-> new RuntimeException("Post Not Found"));
+                .orElseThrow(()-> new BlogPostNotFoundException("Post Not Found"));
         boolean hasLiked= blogPostRepository.hasUserLikedPost(postId,user.getId());
 
         if(hasLiked){
