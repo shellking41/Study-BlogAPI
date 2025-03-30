@@ -26,11 +26,11 @@ public class BlogPost  extends  BaseEntity{
     @OneToMany(mappedBy = "blogPost",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Comment> comments;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "blog_posts_tags",
-            joinColumns = @JoinColumn(name="blog_post_id",nullable = false),
-            inverseJoinColumns = @JoinColumn(name="tag_id",nullable = false)
+            joinColumns = @JoinColumn(name= "blog_post_id",nullable = false),
+            inverseJoinColumns = @JoinColumn(name= "tag_id",nullable = false)
     )
     private List<Tag> tags;
 
@@ -38,11 +38,11 @@ public class BlogPost  extends  BaseEntity{
     @JoinColumn(name = "user_id",nullable = false)
     private User author;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
-            name="likes",
+            name= "likes",
             joinColumns = @JoinColumn(name = "likedPost_id",nullable = false),
-            inverseJoinColumns = @JoinColumn(name="likedByUser_id",nullable = false)
+            inverseJoinColumns = @JoinColumn(name= "likedByUser_id",nullable = false)
     )
     private List<User> likedByUsers;
 
