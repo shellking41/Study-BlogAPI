@@ -20,7 +20,7 @@ public class Tag {
     @Column(unique = true,nullable = false)
     String name;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
    List<BlogPost> blogPosts;
 
 }

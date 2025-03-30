@@ -53,7 +53,7 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,orphanRemoval = true)
   private List<BlogPost> blogPosts;
 
-  @ManyToMany(mappedBy = "likedByUsers")
+  @ManyToMany(mappedBy = "likedByUsers", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private List<BlogPost> likedPosts;
 
 
