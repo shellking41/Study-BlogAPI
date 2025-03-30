@@ -1,7 +1,7 @@
 package org.study.studyblogapi.service;
 
-import org.study.studyblogapi.model.dto.BlogPostRequest;
-import org.study.studyblogapi.model.dto.BlogPostResponse;
+import org.study.studyblogapi.model.dto.request.BlogPostRequest;
+import org.study.studyblogapi.model.dto.response.BlogPostResponse;
 
 public interface IBlogPostService {
 
