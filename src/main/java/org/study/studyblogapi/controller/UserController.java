@@ -3,10 +3,9 @@ package org.study.studyblogapi.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.study.studyblogapi.model.dto.ChangePasswordRequest;
-import org.study.studyblogapi.model.dto.UserResponse;
+import org.study.studyblogapi.model.dto.request.ChangePasswordRequest;
+import org.study.studyblogapi.model.dto.response.UserResponse;
 import org.study.studyblogapi.service.IUserService;
-import org.study.studyblogapi.service.impl.UserService;
 
 import java.security.Principal;
 

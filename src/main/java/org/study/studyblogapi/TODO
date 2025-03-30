@@ -5,3 +5,5 @@
 5.Ha kerul uj tag a adatbazisba akkor checkeljuk hogy van-e olyan benne és ha van akkor ne legyen benne ujra ugyan az
 6.Paginacio,Caching(follower,useradatok),async
 7.like System
+8. Logging
+9.Testing

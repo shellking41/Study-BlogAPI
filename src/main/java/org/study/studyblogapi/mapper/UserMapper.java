@@ -1,6 +1,6 @@
 package org.study.studyblogapi.mapper;
 
-import org.study.studyblogapi.model.dto.UserResponse;
+import org.study.studyblogapi.model.dto.response.UserResponse;
 import org.study.studyblogapi.model.entity.User;
 
 public class UserMapper {

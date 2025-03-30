@@ -9,9 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.study.studyblogapi.exeption.UserNotFoundException;
 import org.study.studyblogapi.mapper.UserMapper;
-import org.study.studyblogapi.model.dto.UserResponse;
+import org.study.studyblogapi.model.dto.response.UserResponse;
 import org.study.studyblogapi.repository.UserRepository;
-import org.study.studyblogapi.model.dto.ChangePasswordRequest;
+import org.study.studyblogapi.model.dto.request.ChangePasswordRequest;
 import org.study.studyblogapi.model.entity.User;
 import org.study.studyblogapi.service.IUserService;
 
