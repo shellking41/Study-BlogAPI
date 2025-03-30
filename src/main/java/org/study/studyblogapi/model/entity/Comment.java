@@ -1,13 +1,11 @@
 package org.study.studyblogapi.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -17,14 +15,14 @@ public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String comment;
+    String content;
 
     @ManyToOne
-    @JoinColumn(name="blog_post_id",nullable = false)
+    @JoinColumn(name="commented_post_id",nullable = false)
     BlogPost blogPost;
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "commenter_id", nullable = false)
     User commenter;
 }
