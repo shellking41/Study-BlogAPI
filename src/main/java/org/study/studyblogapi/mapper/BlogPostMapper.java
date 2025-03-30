@@ -21,6 +21,7 @@ public class BlogPostMapper {
                 .category(blogPost.getCategory())
                 .title(blogPost.getTitle())
                 .content(blogPost.getContent())
+                .likeCount(blogPost.getLikeCount())
                 .updatedAt(blogPost.getUpdatedAt())
                 .createdAt(blogPost.getCreatedAt())
                 .createdBy(blogPost.getCreatedBy())
