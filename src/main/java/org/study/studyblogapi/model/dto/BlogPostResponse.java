@@ -15,6 +15,7 @@ public class BlogPostResponse {
     private String title;
     private String content;
     private String category;
+    private int likeCount;
     private String createdBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
