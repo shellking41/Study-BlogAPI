@@ -1,0 +1,18 @@
+header {
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--header-color);
+}
+
+.content {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    overflow-y: auto;
+}
+
+footer {
+    width: 100%;
+    height: var(--footer-height);
+    background-color: var(--footer-color);
+}
