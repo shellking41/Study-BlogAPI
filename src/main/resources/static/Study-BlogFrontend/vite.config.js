@@ -10,4 +10,8 @@ export default defineConfig({
       web: [/\.jsx$/, /\.tsx$/, /\.js$/, /\.ts$/], // make sure js/ts files are transformed
     },
   },
+  server: {
+    host: true,
+    port: 5173, // vagy amit szeretnél
+  },
 });
