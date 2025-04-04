@@ -18,7 +18,7 @@ public class CommentMapper {
 
     public static CommentResponse toResponse(Comment comment){
         return CommentResponse.builder()
-                .Id(comment.getId())
+                .id(comment.getId())
                 .commenterId(comment.getCommenter().getId())
                 .postId(comment.getBlogPost().getId())
                 .content(comment.getContent())
