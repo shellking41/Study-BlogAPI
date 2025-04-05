@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header.jsx';
 import style from './styles/FormStyle.module.css';
 
-function Form({ inputs, headers, onSubmit, className }) {
+function Form({ inputs, headers, onSubmit }) {
 
   const [formData, setFormData] = useState(
     inputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {}),
@@ -18,20 +18,20 @@ function Form({ inputs, headers, onSubmit, className }) {
   };
 
   return (
-    <form onSubmit={(e) => onSubmit(e, formData)} className={className}>
+    <form onSubmit={(e) => onSubmit(e, formData)} className={style.form}>
       <div className={style.headers}>
         {headers && headers.length > 0 && headers.map((header) => {
           return (
-            <div key={header.id} className={header.className}>
-              <Header tag={header.tag} text={header.text} />
-            </div>
+            <span key={header.id}>
+              <Header tag={header.tag} text={header.text} className={style.header} />
+            </span>
           );
         })}
       </div>
       <div className={style.inputs}>
         {inputs && inputs.length > 0 && inputs.map((input) => {
           return (
-            <input key={input.id} placeholder={input.placeholder} type={input.type} className={input.className}
+            <input key={input.id} placeholder={input.placeholder} type={input.type} className={style.input}
                    name={input.name}
                    onChange={handleChange} />
           );

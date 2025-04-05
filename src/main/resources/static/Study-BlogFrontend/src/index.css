@@ -2,11 +2,14 @@
     margin: 0;
     padding: 0;
     font-family: ubuntu;
+    box-sizing: border-box;
 }
 
 :root {
     --base-color: white;
     --base-backgroud-color: white;
+    --base-shadow: 0px 0px 8px 0.5px gray;
+    --base-radius: 1rem;
     --content-width: 70%;
     --header-height: 10dvh;
     --footer-height: 100px;
