@@ -1,4 +1,4 @@
-package org.study.studyblogapi.exeption;
+package org.study.studyblogapi.exception;
 
 public class BlogPostNotFoundException extends RuntimeException {
     public BlogPostNotFoundException(String message) {
