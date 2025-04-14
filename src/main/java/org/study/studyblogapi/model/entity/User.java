@@ -60,6 +60,9 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "commenter", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments;
 
+  @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+  private MediaFile userIcon;
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return role.getAuthorities();
