@@ -3,7 +3,7 @@ package org.study.studyblogapi.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.study.studyblogapi.exeption.BlogPostNotFoundException;
+import org.study.studyblogapi.exception.BlogPostNotFoundException;
 import org.study.studyblogapi.mapper.CommentMapper;
 import org.study.studyblogapi.model.dto.request.CommentRequest;
 import org.study.studyblogapi.model.dto.response.CommentResponse;

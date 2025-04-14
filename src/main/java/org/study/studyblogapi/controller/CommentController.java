@@ -11,7 +11,7 @@ import org.study.studyblogapi.service.ICommentService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/Comment")
+@RequestMapping("api/v1/Comment")
 public class CommentController {
     private final ICommentService commentService;
 
