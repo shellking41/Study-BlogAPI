@@ -46,6 +46,8 @@ public class BlogPost  extends  BaseEntity{
     )
     private List<User> likedByUsers;
 
+    @OneToMany(mappedBy = "blogPost",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<MediaFile> mediaFile;
 
     //megcsinalja azokat  a dolgokat amiket a adatbazis feltotelse elott kellene csinalni
     @PrePersist
