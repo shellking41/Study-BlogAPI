@@ -1,5 +1,6 @@
 package org.study.studyblogapi.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +49,7 @@ public class UserService implements IUserService {
        return UserMapper.toResponse(user);
     }
 
-
+    
     public User getAuthenticatedUser(){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
 

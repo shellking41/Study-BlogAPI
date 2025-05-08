@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.study.studyblogapi.model.dto.request.AuthenticationRequest;
 import org.study.studyblogapi.model.dto.response.AuthenticationResponse;
 import org.study.studyblogapi.model.dto.request.RegisterRequest;
+import org.study.studyblogapi.model.entity.MediaFile;
+import org.study.studyblogapi.model.enums.UsageType;
+import org.study.studyblogapi.repository.MediaFileRepository;
 import org.study.studyblogapi.security.config.JwtService;
 import org.study.studyblogapi.model.entity.Token;
 import org.study.studyblogapi.repository.TokenRepository;
@@ -29,13 +32,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class AuthenticationService implements IAuthenticationService {
 
-  private final UserRepository repository;
+  private final UserRepository userRepository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+    private final MediaFileRepository mediaFileRepository;
 
-  @Value("${application.security.jwt.expiration}")
+    @Value("${application.security.jwt.expiration}")
   private long jwtExpiration;
 
   @Value("${application.security.jwt.refresh-token.expiration}")
@@ -48,12 +52,20 @@ public class AuthenticationService implements IAuthenticationService {
   public Map<String,Object> register(RegisterRequest request, HttpServletResponse response) {
     var user = User.builder()
         .firstname(request.getFirstname())
+            .userIcon(MediaFile.builder()
+                    .usageType(UsageType.USER_ICON)
+
+                    .path("defaultUserIcon.jpg")
+                    .build())
         .lastname(request.getLastname())
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
-        .role(request.getRole())
         .build();
-    var savedUser = repository.save(user);
+
+    var savedUser = userRepository.save(user);
+
+
+
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
@@ -75,7 +87,7 @@ public class AuthenticationService implements IAuthenticationService {
             request.getPassword()
         )
     );
-    var user = repository.findByEmail(request.getEmail())
+    var user = userRepository.findByEmail(request.getEmail())
         .orElseThrow();
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
@@ -105,7 +117,7 @@ public class AuthenticationService implements IAuthenticationService {
 
       String userEmail = jwtService.extractUsername(refreshToken);
       if (userEmail != null) {
-          var user = this.repository.findByEmail(userEmail)
+          var user = userRepository.findByEmail(userEmail)
                   .orElseThrow();
           if (jwtService.isTokenValid(refreshToken, user)) {
               var accessToken = jwtService.generateToken(user);

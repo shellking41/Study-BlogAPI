@@ -11,6 +11,7 @@ import org.study.studyblogapi.model.entity.MediaFile;
 import org.study.studyblogapi.model.entity.User;
 import org.study.studyblogapi.model.enums.UsageType;
 import org.study.studyblogapi.repository.MediaFileRepository;
+import org.study.studyblogapi.repository.UserRepository;
 import org.study.studyblogapi.service.IMediaFileService;
 
 import java.io.IOException;
@@ -28,7 +29,10 @@ public class MediaFileService implements IMediaFileService {
 
     private final UserService userService;
     private final MediaFileRepository mediaFileRepository;
+    private final UserRepository userRepository;
 
+    //MAPPER HIÁNYZIK!!!!!
+    //NULL AZ ID MIKOR CREATEDELJUK
     @Override
     @Transactional
     public ResponseEntity<UserIconResponse> UploadUserIcon(MultipartFile multipartFile) throws IOException {
@@ -52,9 +56,11 @@ public class MediaFileService implements IMediaFileService {
         if(existingIconOpt.isPresent()){
             mediaFile = existingIconOpt.get();
 
-
             Path oldFilePath = rootPath.resolve(mediaFile.getPath());
-            Files.deleteIfExists(oldFilePath);
+            if(!mediaFile.getPath().equals("defaultUserIcon.jpg")){
+                Files.deleteIfExists(oldFilePath);
+            }
+
 
         // Update path
             mediaFile.setPath("user_icons/" + fileName);
@@ -65,12 +71,13 @@ public class MediaFileService implements IMediaFileService {
                     .path("user_icons/" + fileName)
                     .usageType(UsageType.USER_ICON)
                     .build();
+            user.setUserIcon(mediaFile);
         }
 
         Path subFolder=rootPath.resolve("user_icons");
         Files.createDirectories(subFolder);
 
-        mediaFileRepository.save(mediaFile);
+        userRepository.save(user);
 
         Path filePath=subFolder.resolve(fileName);
         Files.write(filePath,multipartFile.getBytes());

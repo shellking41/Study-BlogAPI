@@ -11,7 +11,8 @@ import org.study.studyblogapi.model.enums.UsageType;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="media_file")
-public class MediaFile extends BaseEntity{
+
+public class MediaFile extends MediaFileBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +23,7 @@ public class MediaFile extends BaseEntity{
 
     private String path;
 
-    @OneToOne
-    @JoinColumn(name="user_id")
+    @OneToOne(mappedBy = "userIcon")
     private User user;
 
     @ManyToOne

@@ -8,7 +8,8 @@ import org.study.studyblogapi.service.IBlogPostService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/BlogPost")
+
+@RequestMapping("/api/v1/blogPost")
 public class BlogPostController {
 
     final IBlogPostService blogPostService;

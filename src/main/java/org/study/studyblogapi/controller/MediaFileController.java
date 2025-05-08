@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
+
 @RequestMapping("api/v1/media")
 public class MediaFileController {
 
